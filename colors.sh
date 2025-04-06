@@ -6,11 +6,18 @@ export WHITE=0xffffffff
 # export BAR_COLOR=0xff001f30
 # export ITEM_BG_COLOR=0xff003547
 # export ACCENT_COLOR=0xff2cf9ed
+#
+
+# -- Catppuccin Mocha Scheme -- 
+export BAR_COLOR=0xff1e1e2e       # Base
+export ITEM_BG_COLOR=0xff313244   # Surface0
+export ACCENT_COLOR=0xffb4befe    # Lavender
+
 
 # -- Gray Scheme --
-export BAR_COLOR=0xff101314
-export ITEM_BG_COLOR=0xff353c3f
-export ACCENT_COLOR=0xffffffff
+# export BAR_COLOR=0xff101314
+# export ITEM_BG_COLOR=0xff353c3f
+# export ACCENT_COLOR=0xffffffff
 
 # -- Purple Scheme --
 # export BAR_COLOR=0xff140c42

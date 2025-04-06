@@ -2,6 +2,10 @@
 
 source "$CONFIG_DIR/colors.sh"
 
+
+source "$CONFIG_DIR/environment"
+source "$THEME_DIR/tokyonight"
+
 # This is a demo config to showcase some of the most important commands.
 # It is meant to be changed and configured, as it is intentionally kept sparse.
 # For a (much) more advanced configuration example see my dotfiles:
@@ -16,7 +20,7 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 # If you are looking for other colors, see the color picker:
 # https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 
-sketchybar --bar position=top height=40 blur_radius=30 color=$BAR_COLOR 
+sketchybar --bar position=top height=40 blur_radius=30 #color=$BAR_COLOR 
 
 ##### Changing Defaults #####
 # We now change some default values, which are applied to all further items.
@@ -31,7 +35,7 @@ default=(
   icon.color=$WHITE
   label.color=$WHITE
   icon.padding_left=10
-  icon.padding_right=10
+  icon.padding_right=0
   label.padding_left=10
   label.padding_right=10
   background.color=$ITEM_BG_COLOR
@@ -39,6 +43,15 @@ default=(
   background.height=24
 )
 sketchybar --default "${default[@]}"
+
+
+# Left
+source "$ITEM_DIR/aerospace"
+source "$ITEM_DIR/spacer"
+source "$ITEM_DIR/front_app"
+
+# Right
+source "$ITEM_DIR/clock"
 
 ##### Adding Mission Control Space Indicators #####
 # Let's add some mission control spaces:
@@ -69,9 +82,9 @@ sketchybar --default "${default[@]}"
 # only the properties deviating from the current defaults need to be set
 
 sketchybar --add item apple left \
-           --set apple icon= label.drawing=off \
+           --set apple icon= label.drawing=off icon.padding_right=10 \
            --add item front_app left \
-           --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
+           --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh"  \
            --subscribe front_app front_app_switched
 
 ##### Adding Right Items #####
@@ -100,3 +113,7 @@ sketchybar --add item clock right \
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
+
+
+
+sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
