@@ -121,6 +121,22 @@ sketchybar --add item spotify right \
            --subscribe spotify media_change
 
 
+# Testing
+# sketchybar --add graph cpu_usage right 100 \
+#            --set cpu_usage script="$PLUGIN_DIR/cpu_usage.sh" \
+#                             update_freq=5 \
+#                             graph.color=0xff00ff00 \
+#                             graph.fill_color=0x6600ff00 \
+#                             graph.line_width=2
+sketchybar --add graph cpu_usage right 50 \
+           --set cpu_usage script="$PLUGIN_DIR/cpu_usage.sh" \
+                            update_freq=5 \
+                            label.color=0xffcba6f7 \
+                            graph.color=0xffcba6f7 \
+                            graph.fill_color=0x55cba6f7 \
+                            graph.line_width=2 \
+                            icon.drawing=off
+
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
