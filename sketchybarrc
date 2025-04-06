@@ -112,8 +112,14 @@ sketchybar --add item clock right \
            --subscribe battery system_woke power_source_change
 
 sketchybar --add item spotify right \
-           --set spotify script="$PLUGIN_DIR/spotify.sh" label.padding_left=0 \
+           --set spotify script="$PLUGIN_DIR/spotify.sh" \
+                         label.padding_left=0 \
+                         icon.padding_right=8 \
+                         icon= \
+                         click_script="open -a Spotify" \ 
+                         drawing=off \
            --subscribe spotify media_change
+
 
 
 ##### Force all scripts to run the first time (never do this in a script) #####
