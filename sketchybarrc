@@ -116,8 +116,9 @@ sketchybar --add item spotify right \
                          label.padding_left=0 \
                          icon.padding_right=8 \
                          icon= \
-                         click_script="open -a Spotify" \ 
-                         drawing=off \
+                         click_script="open -a Spotify" \
+                         drawing=on \
+                         update_freq=5 \
            --subscribe spotify media_change
 
 
