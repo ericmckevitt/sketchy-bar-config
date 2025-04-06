@@ -2,10 +2,6 @@
 
 source "$CONFIG_DIR/colors.sh"
 
-
-source "$CONFIG_DIR/environment"
-source "$THEME_DIR/tokyonight"
-
 # This is a demo config to showcase some of the most important commands.
 # It is meant to be changed and configured, as it is intentionally kept sparse.
 # For a (much) more advanced configuration example see my dotfiles:
@@ -44,15 +40,6 @@ default=(
 )
 sketchybar --default "${default[@]}"
 
-
-# Left
-source "$ITEM_DIR/aerospace"
-source "$ITEM_DIR/spacer"
-source "$ITEM_DIR/front_app"
-
-# Right
-source "$ITEM_DIR/clock"
-
 ##### Adding Mission Control Space Indicators #####
 # Let's add some mission control spaces:
 # https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
@@ -88,7 +75,6 @@ sketchybar --add item apple left \
            --subscribe front_app front_app_switched
 
 
-# Testing: 
 sketchybar --add event aerospace_workspace_change
 
 sketchybar --add item window_title left \
@@ -124,6 +110,11 @@ sketchybar --add item clock right \
            --add item battery right \
            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" padding_right=4 \
            --subscribe battery system_woke power_source_change
+
+sketchybar --add item spotify right \
+           --set spotify script="$PLUGIN_DIR/spotify.sh" label.padding_left=0 \
+           --subscribe spotify media_change
+
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
