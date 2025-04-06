@@ -20,7 +20,7 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 # If you are looking for other colors, see the color picker:
 # https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 
-sketchybar --bar position=top height=40 blur_radius=30 #color=$BAR_COLOR 
+sketchybar --bar position=top height=40 blur_radius=10 #color=$BAR_COLOR 
 
 ##### Changing Defaults #####
 # We now change some default values, which are applied to all further items.
@@ -86,6 +86,16 @@ sketchybar --add item apple left \
            --add item front_app left \
            --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh"  \
            --subscribe front_app front_app_switched
+
+
+# Testing: 
+sketchybar --add item window_title left \
+           --set window_title icon=\
+                               label.font="SF Pro:Semibold:14.0" \
+                               width=dynamic \
+                               updates=on \
+                               update_freq=1 \
+                               script="$PLUGIN_DIR/aerospace_window_title.sh"
 
 ##### Adding Right Items #####
 # In the same way as the left items we can add items to the right side.
