@@ -114,8 +114,10 @@ sketchybar --add item clock right \
 sketchybar --add item spotify right \
            --set spotify script="$PLUGIN_DIR/spotify.sh" \
                          label.padding_left=0 \
+                        label.color=0xffa6e3a1 \
                          icon.padding_right=8 \
                          icon= \
+                         icon.color=0xffa6e3a1 \
                          click_script="open -a Spotify" \
                          drawing=on \
                          update_freq=5 \
