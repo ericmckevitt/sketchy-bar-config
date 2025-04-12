@@ -4,5 +4,5 @@
 # the item invoking this script:
 # https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
 
-sketchybar --set "$NAME" label="$(date +'%a %d %b %I:%M %p')" padding_left=0
+sketchybar --set "$NAME" label="$(date +'%a %b %d %-I:%M %p')" padding_left=0
 
