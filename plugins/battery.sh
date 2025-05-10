@@ -38,9 +38,13 @@ fi
 # updated with the current battery status
 # sketchybar --set "$NAME" icon="$ICON" label="${PERCENTAGE}%" padding_right=0 
 
-sketchybar --set "$NAME" \
-  icon="$ICON" \
-  label="${PERCENTAGE}%" \
-  icon.color="$COLOR" \
-  label.color="$COLOR" \
-  padding_right=0
+if [ "$PERCENTAGE" -lt 100 ]; then
+  sketchybar --set "$NAME" \
+    icon="$ICON" \
+    label="${PERCENTAGE}%" \
+    icon.color="$COLOR" \
+    label.color="$COLOR" \
+    padding_right=0
+else
+  sketchybar --set "$NAME" drawing=off
+fi
