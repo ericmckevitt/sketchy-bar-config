@@ -37,14 +37,33 @@ fi
 # The item invoking this script (name $NAME) will get its icon and label
 # updated with the current battery status
 # sketchybar --set "$NAME" icon="$ICON" label="${PERCENTAGE}%" padding_right=0 
+#
+#
+# if [ "$PERCENTAGE" -le 99 ]; then
+#   sketchybar --set "$NAME" \
+#     icon="$ICON" \
+#     label="${PERCENTAGE}%" \
+#     icon.color="$COLOR" \
+#     label.color="$COLOR" \
+#     padding_right=0
+# else
+#   sketchybar --set "$NAME" drawing=off
+# fi
 
-if [ "$PERCENTAGE" -lt 100 ]; then
-  sketchybar --set "$NAME" \
-    icon="$ICON" \
-    label="${PERCENTAGE}%" \
-    icon.color="$COLOR" \
-    label.color="$COLOR" \
-    padding_right=0
-else
-  sketchybar --set "$NAME" drawing=off
-fi
+sketchybar --set "$NAME" \
+  icon="$ICON" \
+  label="${PERCENTAGE}%" \
+  icon.color="$COLOR" \
+  label.color="$COLOR" \
+  padding_right=0
+
+# if [ "$PERCENTAGE" -lt 100 ]; then
+#   sketchybar --set "$NAME" \
+#     icon="$ICON" \
+#     label="${PERCENTAGE}%" \
+#     icon.color="$COLOR" \
+#     label.color="$COLOR" \
+#     padding_right=0
+# else
+#   sketchybar --set "$NAME" drawing=off
+# fi
