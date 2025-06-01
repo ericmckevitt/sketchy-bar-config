@@ -8,25 +8,32 @@
 # - Updates $NAME (the SketchyBar item) with icon=<emoji> and label="<temp> [<precip>]" 
 #
 
-RAW="$(curl -s 'wttr.in/Denver?format=%25c%25f%25p\n')"
-# e.g. RAW="⛅️ +69°F0.0mm"
+# 1) Fetch raw data
+RAW="$(curl -s 'wttr.in/denver_co?format=%25c%25f%25p\n')"
+# e.g. RAW="☀️  +62°F0.0mm"  (notice two spaces after emoji)
 
-ICON="${RAW%% *}"
-REMAINDER="${RAW#* }"                   # "+69°F0.0mm"
+# 2) Collapse multiple spaces → single, and trim leading/trailing
+#    (this yields: "☀️ +62°F0.0mm")
+CLEAN="$(echo "$RAW" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+/ /g; s/[[:space:]]+$//')"
 
-# Capture “+69°F” (or “-02°C”)
+# 3) Split CLEAN on the first space
+ICON="${CLEAN%% *}"            # “☀️”
+REMAINDER="${CLEAN#* }"       # “+62°F0.0mm”
+
+# 4) Extract temperature with sign (e.g. “+62°F”)
 TEMP_WITH_SIGN="$(echo "$REMAINDER" | sed -E 's/^([+-]?[0-9]+°[FC]).*/\1/')"
+TEMP="${TEMP_WITH_SIGN#+}"    # strips leading “+”, becomes “62°F”
 
-# Strip leading “+”
-TEMP="${TEMP_WITH_SIGN#+}"
-
+# 5) Extract precipitation (e.g. “0.0mm” or “1.5mm”)
 PRECIP="$(echo "$REMAINDER" | sed -E 's/.*?([0-9]+(\.[0-9]+)?mm)$/\1/')"
-PRECIP_VALUE="${PRECIP%mm}"              # remove “mm” → "0.0"
+PRECIP_VALUE="${PRECIP%mm}"   # “0.0” or “1.5”
 
-if [ "$(echo "$PRECIP_VALUE == 0" | bc)" -eq 1 ]; then
+# 6) Decide whether to show precip
+if [ "$(echo "$PRECIP_VALUE == 0" | bc 2>/dev/null)" -eq 1 ] 2>/dev/null; then
   LABEL="$TEMP"
 else
   LABEL="$TEMP $PRECIP"
 fi
 
+# 7) Update SketchyBar
 sketchybar --set "$NAME" icon="$ICON" label="$LABEL"
