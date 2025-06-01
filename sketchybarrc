@@ -155,7 +155,7 @@ sketchybar \
 #              drawing=on \
 #            --subscribe spotify media_change
 
-sketchybar --add item spotify right \
+sketchybar --add item spotify left \
            --set spotify \
              script="$PLUGIN_DIR/music.sh" \
              icon= \
