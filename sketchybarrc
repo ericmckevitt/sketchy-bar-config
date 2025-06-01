@@ -142,6 +142,19 @@ sketchybar \
       padding_right=4 \
       --subscribe battery system_woke power_source_change
 
+# sketchybar --add item spotify right \
+#            --set spotify \
+#              script="$PLUGIN_DIR/music.sh" \
+#              icon= \
+#              label.padding_left=0 \
+#              icon.padding_right=8 \
+#              label.color=0xffa6e3a1 \
+#              icon.color=0xffa6e3a1 \
+#              click_script="open -a Spotify" \
+#              update_freq=5 \
+#              drawing=on \
+#            --subscribe spotify media_change
+
 sketchybar --add item spotify right \
            --set spotify \
              script="$PLUGIN_DIR/music.sh" \
@@ -151,8 +164,8 @@ sketchybar --add item spotify right \
              label.color=0xffa6e3a1 \
              icon.color=0xffa6e3a1 \
              click_script="open -a Spotify" \
-             update_freq=5 \
-             drawing=on \
+             update_freq=2 \
+             drawing=off \    # start hidden
            --subscribe spotify media_change
 
 # Testing
