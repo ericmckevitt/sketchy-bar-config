@@ -127,6 +127,7 @@ sketchybar \
       icon.padding_right=8 \
       label.color=$WHITE \
       icon.color=$WHITE \
+      click_script="open -a Weather" \
       drawing=on \
   \
   --add item volume right \
