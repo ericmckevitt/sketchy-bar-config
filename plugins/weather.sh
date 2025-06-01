@@ -10,6 +10,7 @@
 
 # 1) Fetch raw data
 RAW="$(curl -s 'wttr.in/denver_co?format=%25c%25f%25p\n')"
+# RAW="$(curl -s 'wttr.in/pheonix_az?format=%25c%25f%25p\n')"
 # e.g. RAW="☀️  +62°F0.0mm"  (notice two spaces after emoji)
 
 # 2) Collapse multiple spaces → single, and trim leading/trailing
@@ -19,6 +20,33 @@ CLEAN="$(echo "$RAW" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+/ /g; s/[[:space
 # 3) Split CLEAN on the first space
 ICON="${CLEAN%% *}"            # “☀️”
 REMAINDER="${CLEAN#* }"       # “+62°F0.0mm”
+
+# Convert emoji icon into 
+if [[ $ICON == "☀️" ]]; then # sunny
+  ICON=""
+elif [[ $ICON == "☁️" ]]; then # cloudy
+  ICON="󰅣"
+elif [[ $ICON == "⛅️" ]]; then # sunny with cloud
+  ICON=""
+elif [[ $ICON == "🌦️" ]]; then # sunny but raining
+  ICON=""
+elif [[ $ICON == "🌧" ]]; then
+  ICON="" 
+elif [[ $ICON == "🌩" ]]; then # thunder no rain
+  ICON="󰖓"
+elif [[ $ICON == "🌨" ]]; then 
+  ICON=""
+elif [[ $ICON == "⛈" ]]; then # rain and lightning
+  ICON=""
+elif [[ $ICON == "❄️" ]]; then # snowflake
+  ICON=""
+elif [[ $ICON == "🌨" ]]; then # cloud with snow
+  ICON="󰖘"
+elif [[ $ICON == "🌫" ]]; then # fog
+  ICON=""
+elif [[ $ICON == "✨" ]]; then # stars?
+  ICON=""
+fi
 
 # 4) Extract temperature with sign (e.g. “+62°F”)
 TEMP_WITH_SIGN="$(echo "$REMAINDER" | sed -E 's/^([+-]?[0-9]+°[FC]).*/\1/')"
