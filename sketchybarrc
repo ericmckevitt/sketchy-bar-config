@@ -169,6 +169,16 @@ sketchybar --add item spotify left \
              drawing=off \    # start hidden
            --subscribe spotify media_change
 
+sketchybar --add item disk right \
+            --set disk \
+            script="$PLUGIN_DIR/disk.sh" \
+            icon= \
+             update_freq=3 \
+             label.padding_left=0 \
+             icon.padding_right=8 \
+            label.color=0xfff2cdcd \
+            icon.color=0xfff2cdcd \
+
 # Testing
 # sketchybar --add graph cpu_usage right 100 \
 #            --set cpu_usage script="$PLUGIN_DIR/cpu_usage.sh" \
