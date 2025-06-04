@@ -1,4 +1,4 @@
-j!/bin/sh
+#!/bin/sh
 
 # WEATHER PLUGIN FOR SKETCHYBAR (Open-Meteo version)
 #
@@ -42,7 +42,7 @@ TEMP_LABEL="$(printf "%.0f°F" "$TEMP")"
 
 # Only show precipitation if non-zero
 if [ "$(echo "$PRECIP > 0" | bc -l)" -eq 1 ]; then
-  LABEL="$TEMP_LABEL ☔️"
+  LABEL="$TEMP_LABEL, $PRECIP mm"
 else
   LABEL="$TEMP_LABEL"
 fi
