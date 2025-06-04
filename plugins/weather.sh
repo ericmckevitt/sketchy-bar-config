@@ -13,6 +13,10 @@ URL="https://api.open-meteo.com/v1/forecast?latitude=$LAT&longitude=$LON&current
 
 DATA=$(curl -s "$URL")
 
+FORECAST=$(curl -s "https://api.open-meteo.com/v1/forecast?latitude=$LAT&longitude=$LON&hourly=precipitation&forecast_hours=2&timezone=auto&precipitation_unit=mm")
+
+RAIN_NEXT_2HRS=$(echo "$FORECAST" | jq '[.hourly.precipitation[0:2][]] | add')
+
 TEMP=$(echo "$DATA" | jq -r '.current.temperature_2m')             # e.g. 67.3 (Fahrenheit)
 CODE=$(echo "$DATA" | jq -r '.current.weather_code')               # e.g. 2
 PRECIP=$(echo "$DATA" | jq -r '.current.precipitation')           # e.g. 0.0
@@ -40,9 +44,9 @@ esac
 # Format temp: round to nearest integer, add degree symbol
 TEMP_LABEL="$(printf "%.0f°F" "$TEMP")"
 
-# Only show precipitation if non-zero
-if [ "$(echo "$PRECIP > 0" | bc -l)" -eq 1 ]; then
-  LABEL="$TEMP_LABEL, $PRECIP mm"
+# Only show rain label/color if rain is expected soon
+if [ "$(echo "$RAIN_NEXT_2HRS > 0" | bc -l)" -eq 1 ]; then
+  LABEL="$TEMP_LABEL, ${RAIN_NEXT_2HRS} mm"
   COLOR="0xFF89b4fa"
   sketchybar --set "$NAME" icon="$ICON" label="$LABEL" icon.color=$COLOR label.color=$COLOR
 else
