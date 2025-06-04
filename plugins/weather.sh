@@ -1,67 +1,51 @@
-#!/bin/sh
+j!/bin/sh
 
-# WEATHER PLUGIN FOR SKETCHYBAR
+# WEATHER PLUGIN FOR SKETCHYBAR (Open-Meteo version)
 #
-# - Fetches: ⛅️ +69°F0.0mm
-# - Strips the '+' from temperature
-# - Only shows precipitation when it’s non‐zero
-# - Updates $NAME (the SketchyBar item) with icon=<emoji> and label="<temp> [<precip>]" 
-#
+# - Fetches current temp (°F), weather condition, and precipitation for Denver
+# - You customize the icon per WMO code
+# - Only shows precipitation in the label if it’s non-zero
+# - Updates SketchyBar via $NAME with icon and label
 
-# 1) Fetch raw data
-RAW="$(curl -s 'wttr.in/denver_co?format=%25c%25f%25p\n')"
-# RAW="$(curl -s 'wttr.in/pheonix_az?format=%25c%25f%25p\n')"
-# e.g. RAW="☀️  +62°F0.0mm"  (notice two spaces after emoji)
+LAT="39.7392"
+LON="-104.9903"
+URL="https://api.open-meteo.com/v1/forecast?latitude=$LAT&longitude=$LON&current=temperature_2m,weather_code,precipitation&timezone=auto&temperature_unit=fahrenheit"
 
-# 2) Collapse multiple spaces → single, and trim leading/trailing
-#    (this yields: "☀️ +62°F0.0mm")
-CLEAN="$(echo "$RAW" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+/ /g; s/[[:space:]]+$//')"
+DATA=$(curl -s "$URL")
 
-# 3) Split CLEAN on the first space
-ICON="${CLEAN%% *}"            # “☀️”
-REMAINDER="${CLEAN#* }"       # “+62°F0.0mm”
+TEMP=$(echo "$DATA" | jq -r '.current.temperature_2m')             # e.g. 67.3 (Fahrenheit)
+CODE=$(echo "$DATA" | jq -r '.current.weather_code')               # e.g. 2
+PRECIP=$(echo "$DATA" | jq -r '.current.precipitation')           # e.g. 0.0
 
-# Convert emoji icon into 
-if [[ $ICON == "☀️" ]]; then # sunny
-  ICON=""
-elif [[ $ICON == "☁️" ]]; then # cloudy
-  ICON="󰅣"
-elif [[ $ICON == "⛅️" ]]; then # sunny with cloud
-  ICON=""
-elif [[ $ICON == "🌦️" ]]; then # sunny but raining
-  ICON=""
-elif [[ $ICON == "🌧" ]]; then
-  ICON="" 
-elif [[ $ICON == "🌩" ]]; then # thunder no rain
-  ICON="󰖓"
-elif [[ $ICON == "🌨" ]]; then 
-  ICON=""
-elif [[ $ICON == "⛈" ]]; then # rain and lightning
-  ICON=""
-elif [[ $ICON == "❄️" ]]; then # snowflake
-  ICON=""
-elif [[ $ICON == "🌨" ]]; then # cloud with snow
-  ICON="󰖘"
-elif [[ $ICON == "🌫" ]]; then # fog
-  ICON=""
-elif [[ $ICON == "✨" ]]; then # stars?
-  ICON=""
-fi
+# Map WMO code to icon (you choose the icons)
+case $CODE in
+  0) ICON="" ;;      # Clear sky
+  1) ICON="" ;;      # Mainly clear
+  2) ICON="" ;;      # Partly cloudy
+  3) ICON="" ;;      # Overcast
+  45|48) ICON="" ;;  # Fog or depositing rime fog
+  51|53|55) ICON="" ;;  # Drizzle: Light, moderate, dense
+  56|57) ICON="?" ;;      # Freezing drizzle
+  61|63|65) ICON="" ;;  # Rain: slight, moderate, heavy
+  66|67) ICON="?" ;;      # Freezing rain
+  71|73|75) ICON="󰖘" ;;  # Snowfall
+  77) ICON="?" ;;         # Snow grains
+  80|81|82) ICON="" ;;  # Rain showers
+  85|86) ICON="?" ;;      # Snow showers
+  95) ICON="󰖓" ;;        # Thunderstorm
+  96|99) ICON="?" ;;      # Thunderstorm with hail
+  *) ICON="" ;;         # Unknown
+esac
 
-# 4) Extract temperature with sign (e.g. “+62°F”)
-TEMP_WITH_SIGN="$(echo "$REMAINDER" | sed -E 's/^([+-]?[0-9]+°[FC]).*/\1/')"
-TEMP="${TEMP_WITH_SIGN#+}"    # strips leading “+”, becomes “62°F”
+# Format temp: round to nearest integer, add degree symbol
+TEMP_LABEL="$(printf "%.0f°F" "$TEMP")"
 
-# 5) Extract precipitation (e.g. “0.0mm” or “1.5mm”)
-PRECIP="$(echo "$REMAINDER" | sed -E 's/.*?([0-9]+(\.[0-9]+)?mm)$/\1/')"
-PRECIP_VALUE="${PRECIP%mm}"   # “0.0” or “1.5”
-
-# 6) Decide whether to show precip
-if [ "$(echo "$PRECIP_VALUE == 0" | bc 2>/dev/null)" -eq 1 ] 2>/dev/null; then
-  LABEL="$TEMP"
+# Only show precipitation if non-zero
+if [ "$(echo "$PRECIP > 0" | bc -l)" -eq 1 ]; then
+  LABEL="$TEMP_LABEL ☔️"
 else
-  LABEL="$TEMP $PRECIP"
+  LABEL="$TEMP_LABEL"
 fi
 
-# 7) Update SketchyBar
+# Send to SketchyBar
 sketchybar --set "$NAME" icon="$ICON" label="$LABEL"
