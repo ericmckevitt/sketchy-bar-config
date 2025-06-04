@@ -43,9 +43,9 @@ TEMP_LABEL="$(printf "%.0f°F" "$TEMP")"
 # Only show precipitation if non-zero
 if [ "$(echo "$PRECIP > 0" | bc -l)" -eq 1 ]; then
   LABEL="$TEMP_LABEL, $PRECIP mm"
+  COLOR="0xFF89b4fa"
+  sketchybar --set "$NAME" icon="$ICON" label="$LABEL" icon.color=$COLOR label.color=$COLOR
 else
   LABEL="$TEMP_LABEL"
+  sketchybar --set "$NAME" icon="$ICON" label="$LABEL"
 fi
-
-# Send to SketchyBar
-sketchybar --set "$NAME" icon="$ICON" label="$LABEL"
