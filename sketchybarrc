@@ -40,30 +40,6 @@ default=(
 )
 sketchybar --default "${default[@]}"
 
-##### Adding Mission Control Space Indicators #####
-# Let's add some mission control spaces:
-# https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
-# to indicate active and available mission control spaces.
-
-# SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
-# for i in "${!SPACE_ICONS[@]}"
-# do
-#   sid="$(($i+1))"
-#   space=(
-#     space="$sid"
-#     icon="${SPACE_ICONS[i]}"
-#     icon.padding_left=7
-#     icon.padding_right=7
-#     background.color=0x40ffffff
-#     background.corner_radius=5
-#     background.height=25
-#     label.drawing=off
-#     script="$PLUGIN_DIR/space.sh"
-#     click_script="yabai -m space --focus $sid"
-#   )
-#   sketchybar --add space space."$sid" left --set space."$sid" "${space[@]}"
-# done
-#
 ##### Adding Left Items #####
 # We add some regular items to the left side of the bar, where
 # only the properties deviating from the current defaults need to be set
@@ -102,15 +78,6 @@ sketchybar --add item window_title left \
 # volume is registered. More info about the event system can be found here:
 # https://felixkratz.github.io/SketchyBar/config/events
 
-# sketchybar --add item clock right \
-#            --set clock update_freq=10 icon=􀉉  script="$PLUGIN_DIR/clock.sh" \
-#            --add item volume right \
-#            --set volume script="$PLUGIN_DIR/volume.sh" padding_right=4 \
-#            --subscribe volume volume_change \
-#            --add item battery right \
-#            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" padding_right=4 \
-#            --subscribe battery system_woke power_source_change
-
 sketchybar \
   --add item clock right \
     --set clock \
@@ -143,19 +110,6 @@ sketchybar \
       padding_right=4 \
       --subscribe battery system_woke power_source_change
 
-# sketchybar --add item spotify right \
-#            --set spotify \
-#              script="$PLUGIN_DIR/music.sh" \
-#              icon= \
-#              label.padding_left=0 \
-#              icon.padding_right=8 \
-#              label.color=0xffa6e3a1 \
-#              icon.color=0xffa6e3a1 \
-#              click_script="open -a Spotify" \
-#              update_freq=5 \
-#              drawing=on \
-#            --subscribe spotify media_change
-
 sketchybar --add item spotify left \
            --set spotify \
              script="$PLUGIN_DIR/music.sh" \
@@ -179,13 +133,6 @@ sketchybar --add item disk right \
             label.color=0xfff2cdcd \
             icon.color=0xfff2cdcd \
 
-# Testing
-# sketchybar --add graph cpu_usage right 100 \
-#            --set cpu_usage script="$PLUGIN_DIR/cpu_usage.sh" \
-#                             update_freq=5 \
-#                             graph.color=0xff00ff00 \
-#                             graph.fill_color=0x6600ff00 \
-#                             graph.line_width=2
 sketchybar --add graph cpu_usage right 50 \
            --set cpu_usage script="$PLUGIN_DIR/cpu_usage.sh" \
                             update_freq=5 \
@@ -196,9 +143,7 @@ sketchybar --add graph cpu_usage right 50 \
                             icon.drawing=off
 
 
-##### Force all scripts to run the first time (never do this in a script) #####
+##### Force all scripts to run the first time #####
 sketchybar --update
-
-
 
 sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)

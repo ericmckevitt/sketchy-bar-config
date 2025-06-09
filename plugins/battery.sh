@@ -25,7 +25,7 @@ if [[ "$CHARGING" != "" ]]; then
   ICON="􀢋"
 fi
 
-# red at ≤10%, orange at ≤20%, white otherwise
+# red at <=10%, orange at <=20%, white otherwise
 if [ "$PERCENTAGE" -le 10 ]; then
   COLOR="$RED"
 elif [ "$PERCENTAGE" -le 20 ]; then
@@ -34,36 +34,9 @@ else
   COLOR="$WHITE"
 fi
 
-# The item invoking this script (name $NAME) will get its icon and label
-# updated with the current battery status
-# sketchybar --set "$NAME" icon="$ICON" label="${PERCENTAGE}%" padding_right=0 
-#
-#
-# if [ "$PERCENTAGE" -le 99 ]; then
-#   sketchybar --set "$NAME" \
-#     icon="$ICON" \
-#     label="${PERCENTAGE}%" \
-#     icon.color="$COLOR" \
-#     label.color="$COLOR" \
-#     padding_right=0
-# else
-#   sketchybar --set "$NAME" drawing=off
-# fi
-
 sketchybar --set "$NAME" \
   icon="$ICON" \
   label="${PERCENTAGE}%" \
   icon.color="$COLOR" \
   label.color="$COLOR" \
   padding_right=0
-
-# if [ "$PERCENTAGE" -lt 100 ]; then
-#   sketchybar --set "$NAME" \
-#     icon="$ICON" \
-#     label="${PERCENTAGE}%" \
-#     icon.color="$COLOR" \
-#     label.color="$COLOR" \
-#     padding_right=0
-# else
-#   sketchybar --set "$NAME" drawing=off
-# fi
