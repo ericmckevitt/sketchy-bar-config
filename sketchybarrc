@@ -40,16 +40,13 @@ default=(
 )
 sketchybar --default "${default[@]}"
 
-##### Adding Left Items #####
-# We add some regular items to the left side of the bar, where
-# only the properties deviating from the current defaults need to be set
+##### Left Items #####
 
 sketchybar --add item apple left \
            --set apple icon= label.drawing=off icon.padding_right=10 \
            --add item front_app left \
            --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh"  \
            --subscribe front_app front_app_switched
-
 
 sketchybar --add event aerospace_workspace_change
 
@@ -63,20 +60,20 @@ sketchybar --add item window_title left \
                                script="$PLUGIN_DIR/aerospace_window_title.sh" \
           --subscribe window_title aerospace_workspace_change
 
-##### Adding Right Items #####
-# In the same way as the left items we can add items to the right side.
-# Additional position (e.g. center) are available, see:
-# https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
+sketchybar --add item spotify left \
+           --set spotify \
+             script="$PLUGIN_DIR/music.sh" \
+             icon= \
+             label.padding_left=0 \
+             icon.padding_right=8 \
+             label.color=0xffa6e3a1 \
+             icon.color=0xffa6e3a1 \
+             click_script="open -a Spotify" \
+             update_freq=2 \
+             drawing=off \    # start hidden
+           --subscribe spotify media_change
 
-# sketchybar --add item calendar right \
-#             --set calendar icon=􀉉 \ 
-#                           label="$(date +'%a %d %b %I:%M %p')"
-
-# Some items refresh on a fixed cycle, e.g. the clock runs its script once
-# every 10s. Other items respond to events they subscribe to, e.g. the
-# volume.sh script is only executed once an actual change in system audio
-# volume is registered. More info about the event system can be found here:
-# https://felixkratz.github.io/SketchyBar/config/events
+##### Right Items #####
 
 sketchybar \
   --add item clock right \
@@ -110,18 +107,6 @@ sketchybar \
       padding_right=4 \
       --subscribe battery system_woke power_source_change
 
-sketchybar --add item spotify left \
-           --set spotify \
-             script="$PLUGIN_DIR/music.sh" \
-             icon= \
-             label.padding_left=0 \
-             icon.padding_right=8 \
-             label.color=0xffa6e3a1 \
-             icon.color=0xffa6e3a1 \
-             click_script="open -a Spotify" \
-             update_freq=2 \
-             drawing=off \    # start hidden
-           --subscribe spotify media_change
 
 sketchybar --add item disk right \
             --set disk \

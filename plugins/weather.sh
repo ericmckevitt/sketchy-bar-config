@@ -1,12 +1,5 @@
 #!/bin/sh
 
-# WEATHER PLUGIN FOR SKETCHYBAR (Open-Meteo version)
-#
-# - Fetches current temp (°F), weather condition, and precipitation for Denver
-# - You customize the icon per WMO code
-# - Only shows precipitation in the label if it’s non-zero
-# - Updates SketchyBar via $NAME with icon and label
-
 LAT="39.7392"
 LON="-104.9903"
 URL="https://api.open-meteo.com/v1/forecast?latitude=$LAT&longitude=$LON&current=temperature_2m,weather_code,precipitation&timezone=auto&temperature_unit=fahrenheit"
@@ -17,11 +10,11 @@ FORECAST=$(curl -s "https://api.open-meteo.com/v1/forecast?latitude=$LAT&longitu
 
 RAIN_NEXT_2HRS=$(echo "$FORECAST" | jq '[.hourly.precipitation[0:2][]] | add')
 
-TEMP=$(echo "$DATA" | jq -r '.current.temperature_2m')             # e.g. 67.3 (Fahrenheit)
-CODE=$(echo "$DATA" | jq -r '.current.weather_code')               # e.g. 2
-PRECIP=$(echo "$DATA" | jq -r '.current.precipitation')           # e.g. 0.0
+TEMP=$(echo "$DATA" | jq -r '.current.temperature_2m') # e.g. 67.3 (Fahrenheit)
+CODE=$(echo "$DATA" | jq -r '.current.weather_code') # e.g. 2
+PRECIP=$(echo "$DATA" | jq -r '.current.precipitation') # e.g. 0.0
 
-# Map WMO code to icon (you choose the icons)
+# Map WMO code to icon 
 case $CODE in
   0) ICON="" ;;      # Clear sky
   1) ICON="" ;;      # Mainly clear

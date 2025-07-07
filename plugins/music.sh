@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-# Ensure SketchyBar can find your binaries
 export PATH="/Users/ericmckevitt/.cargo/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
-
 NAME="spotify"
 
-# 1) Check Spotify.app first
+# Check Spotify.app first
 if osascript -e 'application "Spotify" is running' &>/dev/null; then
   STATE=$(osascript -e 'tell application "Spotify" to player state' 2>/dev/null)
   if [ "$STATE" = "playing" ]; then
@@ -19,7 +17,7 @@ if osascript -e 'application "Spotify" is running' &>/dev/null; then
   fi
 fi
 
-# 2) Fallback: rmpc + jq
+# Fallback: rmpc + jq
 if command -v rmpc >/dev/null && command -v jq >/dev/null; then
   RAW_STATE=$(rmpc status | jq -r '.state' 2>/dev/null)
   STATE="$(echo "$RAW_STATE" | tr '[:upper:]' '[:lower:]')"  # normalize
@@ -34,7 +32,7 @@ if command -v rmpc >/dev/null && command -v jq >/dev/null; then
   fi
 fi
 
-# 3) If we reach here, nothing is playing. Always hide + clear label
+# Nothing is playing
 sketchybar --set "$NAME" drawing=off label=""
 
 exit 0
