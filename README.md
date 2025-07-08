@@ -1,6 +1,6 @@
 # Sketchybar Configuration
 
-![Demo Image](./img/sketchybarrc.png)
+![Demo Image](./img/sketchybar_demo.png)
 
 This repository contains my personal [SketchyBar](https://github.com/FelixKratz/SketchyBar) configuration for macOS.  
 
