@@ -60,8 +60,8 @@ sketchybar --add item window_title left \
                                script="$PLUGIN_DIR/aerospace_window_title.sh" \
           --subscribe window_title aerospace_workspace_change
 
-sketchybar --add item spotify left \
-           --set spotify \
+sketchybar --add item music left \
+           --set music \
              script="$PLUGIN_DIR/music.sh" \
              icon= \
              label.padding_left=0 \
@@ -71,7 +71,7 @@ sketchybar --add item spotify left \
              click_script="open -a Spotify" \
              update_freq=2 \
              drawing=off \    # start hidden
-           --subscribe spotify media_change
+           --subscribe music media_change
 
 ##### Right Items #####
 

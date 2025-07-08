@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export PATH="/Users/ericmckevitt/.cargo/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
-NAME="spotify"
+NAME="music"
 
 # Check Spotify.app first
 if osascript -e 'application "Spotify" is running' &>/dev/null; then
