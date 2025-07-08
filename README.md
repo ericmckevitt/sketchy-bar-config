@@ -2,9 +2,7 @@
 
 ![Demo Image](./img/sketchybar_demo.png)
 
-This repository contains my personal [SketchyBar](https://github.com/FelixKratz/SketchyBar) configuration for macOS.  
-
-The main configuration file is [`./sketchybarrc`](./sketchybarrc), which sets up the bar layout, appearance, and behavior.  
+This repository contains my personal [SketchyBar](https://github.com/FelixKratz/SketchyBar) configuration for macOS. I have set up my configuration to be a relatively minimal menu bar, where items/widgets disappear from view when not needed. The main configuration file is [`./sketchybarrc`](./sketchybarrc), which sets up the bar layout, appearance, and behavior.  
 
 ## 📂 File Overview
 
