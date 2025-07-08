@@ -13,7 +13,7 @@ This repository contains my personal [SketchyBar](https://github.com/FelixKratz/
 ## ⚙️ Features
 
 - Left-aligned items:
-  -  Apple icon
+  - Apple icon
   - Current frontmost app
   - Window title (from [Aerospace](https://aerospace.rocks/))
   - Music playback info (shown only when media is playing)
