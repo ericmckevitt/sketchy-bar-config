@@ -13,9 +13,9 @@ This repository contains my personal [SketchyBar](https://github.com/FelixKratz/
 ## ⚙️ Features
 
 - Left-aligned items:
-  - Apple icon
+  - Apple logo
   - Current frontmost app
-  - Window title (from [Aerospace](https://aerospace.rocks/))
+  - Window title (from [Aerospace](https://github.com/nikitabobko/AeroSpace))
   - Music playback info (shown only when media is playing)
 - Right-aligned items:
   - Clock
