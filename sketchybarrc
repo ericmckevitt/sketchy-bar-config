@@ -59,6 +59,7 @@ sketchybar --add item music left \
              drawing=off \    # start hidden
            --subscribe music media_change
 
+
 ##### Right Items #####
 
 sketchybar \
